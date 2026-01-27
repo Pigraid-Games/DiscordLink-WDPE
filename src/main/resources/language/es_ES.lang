@@ -1,0 +1,43 @@
+# Discord Link Plugin - English (US)
+
+# General
+command.onlyPlayers=§cThis command can only be used by players!
+
+# Link Command
+link.command.usage=/link - Link your Minecraft account to Discord
+link.command.generating=§eGenerating your verification code...
+link.command.success.title=§a§lDiscord Link Code
+link.command.success.code=§aYour verification code is: §e§l%1
+link.command.success.instructions=§7Go to Discord and use §b/verify %1
+link.command.success.expires=§7This code expires in §e%1 seconds
+link.command.success.discord=§7Join Discord: §b%1
+link.command.already_linked=§cYour account is already linked to Discord: §e%1
+link.command.code_exists=§eYou already have an active code: §6§l%1§r\n§7Expires in §e%2 seconds
+link.command.error=§cFailed to generate verification code. Please try again later.
+link.command.no_account=§cYour Minecraft account was not found. Please rejoin the server.
+
+# Link Form UI
+link.form.title=Discord Link Code
+link.form.instructions=Go to Discord and use §b/verify %1
+link.form.channel=Use this command in channel: %1
+link.form.expires=Code expires in: §e%1
+
+# Unlink Command
+unlink.command.usage=/link unlink - Unlink your Discord account
+unlink.command.success=§aYour Discord account has been unlinked.
+unlink.command.not_linked=§cYour account is not linked to any Discord account.
+unlink.command.error=§cFailed to unlink account. Please try again later.
+
+# Status Command
+status.command.usage=/link status - Check your Discord link status
+status.command.linked=§aYour account is linked to Discord user: §e%1
+status.command.not_linked=§7Your account is not linked to any Discord account.\n§7Use §b/link§7 to connect your accounts.
+status.command.linked_since=§7Linked since: §e%1
+status.command.error=§cFailed to check link status. Please try again later.
+
+# Form Buttons
+forms.button.ok=§l§aOK
+forms.button.understood=§aUnderstood
+
+# Notifications (when linking completes from Discord bot)
+notification.linked=§a§lDiscord Linked!§r\n§7Your Minecraft account is now linked to Discord

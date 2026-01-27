@@ -1,0 +1,31 @@
+# DiscordLink-WDPE Plugin Configuration
+# Configuration for Discord-Minecraft account linking
+
+# AccountService API Configuration
+account_service:
+  # Base URL for the AccountService API
+  base_url: "http://account-service:5005"
+  # API Key for authentication (REQUIRED - replace with your actual API key)
+  # SECURITY: Never commit production API keys to version control
+  api_key: ""
+  # Request timeout in seconds
+  timeout: 15
+  # Enable detailed logging of API requests
+  debug_requests: true
+
+# Discord server information (shown to players)
+discord:
+  # Discord server invite URL
+  invite_url: "https://discord.gg/pigraid"
+  # Channel where players should use bot commands
+  bot_command_channel: "#bot-commands"
+
+# Plugin Settings
+settings:
+  # Show link code in Form UI (true) or chat message (false)
+  use_form_ui: true
+  # Auto-send notification when linking completes (requires NotificationDispatcher-WDPE)
+  enable_notifications: true
+
+# Debug mode
+debug: false

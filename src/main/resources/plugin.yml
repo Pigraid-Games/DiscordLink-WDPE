@@ -1,0 +1,10 @@
+name: DiscordLink-WDPE
+version: 1.0.0
+main: gg.pigraid.discordlink.DiscordLinkPlugin
+author: Pigraid Team
+description: Discord-Minecraft account linking at proxy level
+website: https://github.com/pigraid
+softdepend:
+  - AccountAdapter-WDPE
+  - WaterdogI18n
+  - NotificationDispatcher-WDPE
