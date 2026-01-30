@@ -41,7 +41,7 @@ public class DiscordLinkPlugin extends Plugin {
         this.config = new YamlConfig(new File(this.getDataFolder(), "config.yml").toPath());
 
         // Initialize Discord Link Service Client
-        String baseUrl = config.getString("account_service.base_url", "http://localhost:5005");
+        String baseUrl = config.getString("account_service.base_url", "http://localhost/api/accounts");
         String apiKey = config.getString("account_service.api_key", "");
         boolean debugRequests = config.getBoolean("account_service.debug_requests", false);
 

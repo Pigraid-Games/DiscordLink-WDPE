@@ -47,7 +47,7 @@ public class DiscordLinkServiceClient {
     public boolean testConnection() {
         try {
             Request request = new Request.Builder()
-                .url(baseUrl + "/api/health")
+                .url(baseUrl + "/health")
                 .header("X-Api-Key", apiKey)
                 .get()
                 .build();
@@ -84,7 +84,7 @@ public class DiscordLinkServiceClient {
             );
 
             Request request = new Request.Builder()
-                .url(baseUrl + "/api/accounts/discord/generate-code")
+                .url(baseUrl + "/discord/generate-code")
                 .header("X-Api-Key", apiKey)
                 .post(body)
                 .build();
@@ -164,7 +164,7 @@ public class DiscordLinkServiceClient {
             );
 
             Request request = new Request.Builder()
-                .url(baseUrl + "/api/accounts/discord/unlink")
+                .url(baseUrl + "/discord/unlink")
                 .header("X-Api-Key", apiKey)
                 .post(body)
                 .build();
@@ -236,7 +236,7 @@ public class DiscordLinkServiceClient {
 
         try {
             Request request = new Request.Builder()
-                .url(baseUrl + "/api/accounts/" + xuid)
+                .url(baseUrl + "/" + xuid)
                 .header("X-Api-Key", apiKey)
                 .get()
                 .build();

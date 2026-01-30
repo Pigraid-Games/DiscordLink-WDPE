@@ -4,7 +4,7 @@
 # AccountService API Configuration
 account_service:
   # Base URL for the AccountService API
-  base_url: "http://account-service:5005"
+  base_url: "http://localhost/api/accounts"
   # API Key for authentication (REQUIRED - replace with your actual API key)
   # SECURITY: Never commit production API keys to version control
   api_key: ""
