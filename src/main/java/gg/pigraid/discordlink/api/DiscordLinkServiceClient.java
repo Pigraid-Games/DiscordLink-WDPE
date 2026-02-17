@@ -2,8 +2,10 @@ package gg.pigraid.discordlink.api;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
 import gg.pigraid.accountadapter.models.AccountDto;
 import gg.pigraid.discordlink.api.models.*;
+import gg.pigraid.pighttp.HttpClientFactory;
 import okhttp3.*;
 
 import java.io.IOException;
@@ -30,13 +32,12 @@ public class DiscordLinkServiceClient {
         this.debugRequests = debugRequests;
         this.gson = new Gson();
 
-        // PERFORMANCE: Connection pooling for efficient HTTP requests
-        this.httpClient = new OkHttpClient.Builder()
+        // PERFORMANCE: Use shared HTTP client with custom retry setting
+        this.httpClient = HttpClientFactory.newBuilder()
                 .connectTimeout(3, TimeUnit.SECONDS)
                 .readTimeout(5, TimeUnit.SECONDS)
                 .writeTimeout(5, TimeUnit.SECONDS)
                 .callTimeout(10, TimeUnit.SECONDS)
-                .connectionPool(new ConnectionPool(5, 30, TimeUnit.SECONDS))
                 .retryOnConnectionFailure(false)
                 .build();
     }
@@ -57,7 +58,7 @@ public class DiscordLinkServiceClient {
                 // Just checking if the service is reachable
                 return response.code() > 0;
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             if (debugRequests) {
                 System.err.println("Failed to test connection to AccountService: " + e.getMessage());
             }
@@ -121,7 +122,7 @@ public class DiscordLinkServiceClient {
                             result.setMessage("Invalid response from server");
                         }
                         future.complete(result);
-                    } catch (Exception e) {
+                    } catch (JsonSyntaxException e) {
                         if (debugRequests) {
                             System.err.println("Error parsing generate-code response: " + e.getMessage());
                         }
@@ -132,7 +133,7 @@ public class DiscordLinkServiceClient {
                     }
                 }
             });
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             if (debugRequests) {
                 System.err.println("Exception in generateVerificationCode: " + e.getMessage());
             }
@@ -201,7 +202,7 @@ public class DiscordLinkServiceClient {
                             result.setMessage("Invalid response from server");
                         }
                         future.complete(result);
-                    } catch (Exception e) {
+                    } catch (JsonSyntaxException e) {
                         if (debugRequests) {
                             System.err.println("Error parsing unlink response: " + e.getMessage());
                         }
@@ -212,7 +213,7 @@ public class DiscordLinkServiceClient {
                     }
                 }
             });
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             if (debugRequests) {
                 System.err.println("Exception in unlinkDiscordAccount: " + e.getMessage());
             }
@@ -267,7 +268,7 @@ public class DiscordLinkServiceClient {
                             }
                             future.complete(null);
                         }
-                    } catch (Exception e) {
+                    } catch (JsonSyntaxException e) {
                         if (debugRequests) {
                             System.err.println("Error parsing account response: " + e.getMessage());
                         }
@@ -275,7 +276,7 @@ public class DiscordLinkServiceClient {
                     }
                 }
             });
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             if (debugRequests) {
                 System.err.println("Exception in getAccountByXuid: " + e.getMessage());
             }
@@ -287,11 +288,9 @@ public class DiscordLinkServiceClient {
 
     /**
      * Close the HTTP client and release resources
+     * Note: PigHttp-WDPE manages shared resources, so no cleanup needed here
      */
     public void close() {
-        if (httpClient != null) {
-            httpClient.dispatcher().executorService().shutdown();
-            httpClient.connectionPool().evictAll();
-        }
+        // No-op: PigHttp-WDPE manages lifecycle
     }
 }

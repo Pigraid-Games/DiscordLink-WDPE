@@ -1,11 +1,13 @@
 package gg.pigraid.discordlink.commands;
 
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import gg.pigraid.accountadapter.models.AccountDto;
 import gg.pigraid.discordlink.DiscordLinkPlugin;
 import gg.pigraid.discordlink.api.models.GenerateCodeResponse;
 import gg.pigraid.discordlink.api.models.UnlinkResponse;
 import gg.pigraid.discordlink.forms.LinkForms;
+import gg.pigraid.feedbackutils.wdpe.SoundUtil;
 import dev.waterdog.waterdogpe.command.Command;
 import dev.waterdog.waterdogpe.command.CommandSender;
 import dev.waterdog.waterdogpe.command.CommandSettings;
@@ -82,6 +84,7 @@ public class LinkCommands extends Command {
             })
             .exceptionally(ex -> {
                 plugin.getLogger().error("Error generating verification code: " + ex.getMessage());
+                SoundUtil.playError(player);
                 player.sendMessage(plugin.getI18n().tr(language, "link.command.error"));
                 return null;
             });
@@ -96,6 +99,7 @@ public class LinkCommands extends Command {
             String error = response.getError();
             if ("ALREADY_LINKED".equals(error)) {
                 // Player is already linked
+                SoundUtil.playError(player);
                 String message = response.getMessage();
                 player.sendMessage(plugin.getI18n().tr(language, "link.command.already_linked", message));
             } else if ("CODE_EXISTS".equals(error)) {
@@ -112,6 +116,7 @@ public class LinkCommands extends Command {
                 }
             } else {
                 // Generic error
+                SoundUtil.playError(player);
                 player.sendMessage(plugin.getI18n().tr(language, "link.command.error"));
                 if (plugin.getConfiguration().getBoolean("debug", false)) {
                     player.sendMessage("§cDebug: " + response.getMessage());
@@ -147,6 +152,7 @@ public class LinkCommands extends Command {
         plugin.getServiceClient().getAccountByXuid(xuid)
             .thenAccept(account -> {
                 if (account == null) {
+                    SoundUtil.playError(player);
                     player.sendMessage(plugin.getI18n().tr(language, "link.command.no_account"));
                     return;
                 }
@@ -176,6 +182,7 @@ public class LinkCommands extends Command {
             })
             .exceptionally(ex -> {
                 plugin.getLogger().error("Error fetching account for unlink: " + ex.getMessage());
+                SoundUtil.playError(player);
                 player.sendMessage(plugin.getI18n().tr(language, "unlink.command.error"));
                 return null;
             });
@@ -215,6 +222,7 @@ public class LinkCommands extends Command {
             })
             .exceptionally(ex -> {
                 plugin.getLogger().error("Error fetching account for status: " + ex.getMessage());
+                SoundUtil.playError(player);
                 player.sendMessage(plugin.getI18n().tr(language, "status.command.error"));
                 return null;
             });
@@ -229,7 +237,7 @@ public class LinkCommands extends Command {
             if (extraData.has("LanguageCode")) {
                 return extraData.get("LanguageCode").getAsString();
             }
-        } catch (Exception e) {
+        } catch (JsonParseException e) {
             // Fallback to en_US if error
         }
         return "en_US";

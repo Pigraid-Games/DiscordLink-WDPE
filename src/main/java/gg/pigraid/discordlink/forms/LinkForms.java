@@ -2,6 +2,7 @@ package gg.pigraid.discordlink.forms;
 
 import dev.waterdog.waterdogpe.player.ProxiedPlayer;
 import gg.pigraid.discordlink.DiscordLinkPlugin;
+import gg.pigraid.feedbackutils.wdpe.SoundUtil;
 import xxAROX.WDForms.forms.elements.Button;
 import xxAROX.WDForms.forms.types.MenuForm;
 
@@ -23,6 +24,8 @@ public class LinkForms {
      * @param plugin Plugin instance
      */
     public static void showLinkCodeForm(ProxiedPlayer player, String language, String code, int expiresInSeconds, DiscordLinkPlugin plugin) {
+        SoundUtil.playFormOpen(player);
+
         // Format expiry time
         String expiryText;
         if (expiresInSeconds >= 60) {

@@ -73,7 +73,7 @@ public class DiscordLinkPlugin extends Plugin {
             } else {
                 this.getLogger().warn("AccountAdapter connection test failed - language preferences may be unavailable");
             }
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             this.getLogger().warn("Failed to initialize AccountAdapter: " + e.getMessage());
         }
 
@@ -120,7 +120,7 @@ public class DiscordLinkPlugin extends Plugin {
             } else {
                 this.getLogger().warn("NotificationDispatcher-WDPE not found - notifications disabled");
             }
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             this.getLogger().warn("Failed to load NotificationDispatcher-WDPE: " + e.getMessage());
         }
 
@@ -227,7 +227,7 @@ public class DiscordLinkPlugin extends Plugin {
             );
             sendMethod.invoke(null, targetPlayer, notification);
 
-        } catch (Exception e) {
+        } catch (ReflectiveOperationException e) {
             this.getLogger().warn("Failed to send notification: " + e.getMessage());
         }
     }

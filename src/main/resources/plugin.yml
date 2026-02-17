@@ -5,6 +5,8 @@ author: Pigraid Team
 description: Discord-Minecraft account linking at proxy level
 website: https://github.com/pigraid
 softdepend:
+  - NotificationDispatcher-WDPE
+depend:
+  - PigHttp-WDPE
   - AccountAdapter-WDPE
   - WaterdogI18n
-  - NotificationDispatcher-WDPE
